@@ -267,10 +267,11 @@ public class RNSendIntentModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void sendPhoneCall(String phoneNumberString, Boolean phoneAppOnly) {
+    public void sendPhoneCall(String phoneNumberString, Boolean phoneAppOnly, int simId) {
       //Needs permission "android.permission.CALL_PHONE"
       Intent sendIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phoneNumberString.replaceAll("#", "%23").trim()));
       sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+      sendIntent.putExtra("com.android.phone.extra.slot", simId);
       if (phoneAppOnly) {
           sendIntent.setPackage("com.android.server.telecom");
       }
